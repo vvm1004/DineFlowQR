@@ -1,8 +1,9 @@
 "use client";
 
+import { useAppContext } from "@/components/app.provider";
 import { getAccessTokenFromLocalStorage } from "@/lib/utils";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 const menuItems = [
   { title: "Món ăn", href: "/menu" },
@@ -13,10 +14,9 @@ const menuItems = [
 
 export default function NavItems({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
-  const [isAuth, setAuth] = useState(false);
+  const { isAuth } = useAppContext();
 
   useEffect(() => {
-    setAuth(Boolean(getAccessTokenFromLocalStorage()));
     setMounted(true);
   }, []);
 

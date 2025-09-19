@@ -17,14 +17,20 @@ import { useLoginMutation } from "@/queries/useAuth";
 import { toast } from "@/components/ui/use-toast";
 import { handleErrorApi } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAppContext } from "@/components/app.provider";
 
 export default function LoginForm() {
   const [mounted, setMounted] = useState(false);
-
+  const searchParams = useSearchParams();
+  const clearTokens = searchParams.get("clearTokens");
+  const { setIsAuth } = useAppContext();
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (clearTokens === "true") {
+      setIsAuth(false);
+    }
+  }, [clearTokens, setIsAuth]);
 
   const loginMutation = useLoginMutation();
   const form = useForm<LoginBodyType>({
@@ -45,6 +51,7 @@ export default function LoginForm() {
       toast({
         description: result.payload.message,
       });
+      setIsAuth(true);
       router.push("/manage/dashboard");
     } catch (error) {
       handleErrorApi({
