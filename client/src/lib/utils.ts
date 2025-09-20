@@ -5,7 +5,6 @@ import { twMerge } from "tailwind-merge";
 import { EntityError } from "./http";
 import jwt from "jsonwebtoken";
 import authApiRequest from "@/apiRequests/auth";
-import { on } from "events";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
