@@ -24,13 +24,13 @@ export default function LoginForm() {
   const [mounted, setMounted] = useState(false);
   const searchParams = useSearchParams();
   const clearTokens = searchParams.get("clearTokens");
-  const { setIsAuth } = useAppContext();
+  const { setRole } = useAppContext();
   useEffect(() => {
     setMounted(true);
     if (clearTokens === "true") {
-      setIsAuth(false);
+      setRole();
     }
-  }, [clearTokens, setIsAuth]);
+  }, [clearTokens, setRole]);
 
   const loginMutation = useLoginMutation();
   const form = useForm<LoginBodyType>({
@@ -51,7 +51,7 @@ export default function LoginForm() {
       toast({
         description: result.payload.message,
       });
-      setIsAuth(true);
+      setRole(result.payload.data.account.role);
       router.push("/manage/dashboard");
     } catch (error) {
       handleErrorApi({

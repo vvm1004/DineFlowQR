@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         pathname: "/**",
       },
+      {
+        hostname: "via.placeholder.com",
+        pathname: "/**",
+      },
     ],
   },
 };
